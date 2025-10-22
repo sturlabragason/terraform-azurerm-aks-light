@@ -12,7 +12,7 @@ resource "azurerm_monitor_data_collection_rule" "main" {
     }
 
     dynamic "event_hub" {
-      for_each = coalesce(var.data_collection_rule.custom_event_hub_id, local.default_event_hub) != null ? [1] : []
+      for_each = var.data_collection_rule.custom_event_hub_id != null || local.default_event_hub != null ? [1] : []
 
       content {
         name         = "event-hub"
