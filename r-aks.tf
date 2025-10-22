@@ -71,7 +71,7 @@ resource "azurerm_kubernetes_cluster" "main" {
 
   identity {
     type         = "UserAssigned"
-    identity_ids = [coalesce(var.user_assigned_identity.id, azurerm_user_assigned_identity.main[0].id)]
+    identity_ids = [coalesce(try(var.user_assigned_identity.id, null), azurerm_user_assigned_identity.main[0].id)]
   }
 
   dynamic "kubelet_identity" {
