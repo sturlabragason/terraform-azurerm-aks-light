@@ -11,9 +11,13 @@ resource "azurerm_monitor_data_collection_rule" "main" {
       workspace_resource_id = coalesce(var.data_collection_rule.custom_log_analytics_workspace_id, local.default_log_analytics)
     }
 
-    event_hub {
-      name         = "default-eventhub"
-      event_hub_id = coalesce(var.data_collection_rule.custom_event_hub_id, local.default_event_hub)
+    dynamic "event_hub" {
+      for_each = coalesce(var.data_collection_rule.custom_event_hub_id, local.default_event_hub) != null ? [1] : []
+
+      content {
+        name         = "event-hub"
+        event_hub_id = coalesce(var.data_collection_rule.custom_event_hub_id, local.default_event_hub)
+      }
     }
   }
 
