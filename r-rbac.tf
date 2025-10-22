@@ -56,7 +56,7 @@ moved {
 
 # Allow Kubelet Identity to authenticate with Azure Container Registry (ACR)
 resource "azurerm_role_assignment" "kubelet_uai_acr_pull" {
-  count = var.user_assigned_identity_role_assignment_enabled ? length(var.container_registry_id[*]) : 0
+  # count = var.user_assigned_identity_role_assignment_enabled ? length(var.container_registry_id[*]) : 0
 
   scope                = var.container_registry_id
   principal_id         = azurerm_kubernetes_cluster.main.kubelet_identity[0].object_id
